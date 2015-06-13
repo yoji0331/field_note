@@ -5,7 +5,7 @@ gem 'nokogiri', '1.6.0'
 
 ruby '2.1.2'
 #ruby-gemset=railstutorial_rails_4_0
-
+gem 'minitest'
 gem 'rails', '4.1.6'
 
 group :development, :test do
