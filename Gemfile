@@ -1,12 +1,13 @@
 source 'https://rubygems.org'
-
 ENV['NOKOGIRI_USE_SYSTEM_LIBRARIES'] = 'YES'
+
 gem 'nokogiri', '1.6.0'
 
 ruby '2.1.2'
-#ruby-gemset=railstutorial_rails_4_0
+
 gem 'minitest'
 gem 'rails', '4.1.6'
+gem 'bcrypt-ruby', '3.1.2'
 
 group :development, :test do
   gem 'sqlite3', '1.3.8'
