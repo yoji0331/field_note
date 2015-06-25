@@ -13,6 +13,7 @@ end
   
 def show
   @user = User.find(params[:id])
+  @notes = @user.notes.paginate(page: params[:page])
 end
 
 def create
@@ -53,9 +54,7 @@ private
 
     # Before actions
 
-  def signed_in_user
-    redirect_to signin_url, notice: "Please sign in." unless signed_in?
-  end
+
   def correct_user
     @user = User.find(params[:id])
     redirect_to(root_path) unless current_user?(@user)

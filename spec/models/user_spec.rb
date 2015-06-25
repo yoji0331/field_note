@@ -17,6 +17,9 @@ describe User do
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:authenticate) }
   it { should respond_to(:admin) }
+  it { should respond_to(:notes) }
+  it { should respond_to(:feed) }
+
 
 
 	it { should be_valid }
@@ -104,6 +107,34 @@ describe User do
 
       it { should_not eq user_for_invalid_password }
       specify { expect(user_for_invalid_password).to be_false }
+    end
+  end
+
+  describe "note assiciations" do
+    before { @user.save }
+    let!(:older_note) do
+      FactoryGirl.create(:note,user:@user,created_at: 1.day.ago)
+    end
+    let!(:newer_note) do
+      FactoryGirl.create(:note,user:@user,created_at: 1.hour.ago)
+    end
+
+    it "should destroy assiciated notes" do
+      notes = @user.notes.to_a
+      @user.destroy
+      expect(notes).not_to be_empty
+      notes.each do |note|
+        expect(Note.where(id: note.id)).to be_empty
+      end
+    end
+
+    describe "status" do
+      let(:unfollowed_post) do
+        FactoryGirl.create(:note,user:FactoryGirl.create(:user))
+      end
+      its(:feed) { should include(newer_note) }
+      its(:feed) { should include(older_note) }
+      its(:feed) { should_not include(unfollowed_post) }
     end
   end
 end

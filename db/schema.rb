@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150619102328) do
+ActiveRecord::Schema.define(version: 20150624065917) do
+
+  create_table "notes", force: true do |t|
+    t.string   "body"
+    t.integer  "user_id"
+    t.float    "lat"
+    t.float    "lng"
+    t.string   "date"
+    t.string   "weather"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "notes", ["user_id", "created_at"], name: "index_notes_on_user_id_and_created_at"
 
   create_table "users", force: true do |t|
     t.string   "name"
@@ -19,8 +32,8 @@ ActiveRecord::Schema.define(version: 20150619102328) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "password_digest"
-    t.string   "remember_token"
     t.boolean  "admin",           default: false
+    t.string   "remember_token"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

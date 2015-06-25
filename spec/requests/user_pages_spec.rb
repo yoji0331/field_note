@@ -93,4 +93,22 @@ describe "User pages" do
 			specify { expect(user.reload.email).to eq new_email }
 		end
 	end
+
+	describe "profile page" do
+		let(:user) { FactoryGirl.create(:user) }
+    let!(:n1) { FactoryGirl.create(:note, user: user, body: "Foo") }
+    let!(:n2) { FactoryGirl.create(:note, user: user, body: "Bar") }
+
+    before { visit user_path(user) }
+
+    it { should have_content(user.name) }
+    it { should have_title(user.name) }
+
+    describe "note" do
+      it { should have_content(n1.body) }
+      it { should have_content(n2.body) }
+      it { should have_content(user.notes.count) }
+    end
+	end
+
 end

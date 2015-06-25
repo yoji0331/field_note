@@ -9,4 +9,10 @@ FactoryGirl.define do
       admin true
     end
   end
+
+
+  factory :note do
+  	body "Test"
+  	user
+  end
 end
